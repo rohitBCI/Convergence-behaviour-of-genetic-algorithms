@@ -8,7 +8,7 @@ class Genetic_Algorithm():
     	self.chromosome_length = chromosome_length
     	self.scores = scores
     	self.parent_1 = parent_1
-    	self.parent_2 = parent_2s
+    	self.parent_2 = parent_2
     	self.mutation_probability = mutation_probability
 
     def create_starting_population(individuals, chromosome_length):
@@ -33,80 +33,48 @@ class Genetic_Algorithm():
 
         return fitness_scores
 
-    def calculate_fitness_individual(population):
-        # Create an array of True/False compared to reference
-        #identical_to_reference = population == reference
-        # Sum number of genes that are identical to the reference
-        fitness_scores_individual = np.sum(population)
 
-        return fitness_scores_individual
+    def two_point_crossover(parent_1, parent_2):
 
-    def select_individual_by_tournament(population, scores):
-        # Get population size
-        population_size = len(scores)
-
-        # Pick individuals for tournament
-        fighter_1 = random.randint(0, population_size-1)
-
-        fighter_2 = random.randint(0, population_size-1)
-
-        # Get fitness score for each
-        fighter_1_fitness = scores[fighter_1]
-        fighter_2_fitness = scores[fighter_2]
-
-        # Identify undividual with highest fitness
-        # Fighter 1 will win if score are equal
-        if fighter_1_fitness >= fighter_2_fitness:
-            winner = fighter_1
-        else:
-            winner = fighter_2
-
-        # Return the chromsome of the winner
-        return population[winner, :] 
-
-    def breed_by_crossover(parent_1, parent_2):
-        # Get length of chromosome
         chromosome_length = len(parent_1)
+        # Pick crossover points, avoding ends of chromsome
+        crossover_point1 = random.randint(1,chromosome_length)
+        crossover_point2 = random.randint(1,chromosome_length-1)
 
-        # Pick crossover point, avoding ends of chromsome
-        crossover_point = random.randint(1,chromosome_length-1)
+        if crossover_point2 >= crossover_point1:
+            crossover_point2 += 1
 
+        else:
+            crossover_point1, crossover_point2 = crossover_point2, crossover_point1
+        
         # Create children. np.hstack joins two arrays
-        child_1 = np.hstack((parent_1[0:crossover_point],
-                            parent_2[crossover_point:]))
 
-        child_2 = np.hstack((parent_2[0:crossover_point],
-                            parent_1[crossover_point:]))
+        child_1 = np.hstack((parent_1[0:crossover_point1],
+                            parent_2[crossover_point1:crossover_point2],
+                            parent_1[crossover_point2:]))
+
+        child_2 = np.hstack((parent_2[0:crossover_point1],
+                            parent_1[crossover_point1:crossover_point2],
+                            parent_2[crossover_point2:]))
 
         # Return children
         return child_1, child_2
 
-    def randomly_mutate_population(population, mutation_probability):
 
-        # Apply random mutation
-        random_mutation_array = np.random.random(
-            size=(population.shape))
+    def check_stopping_criterion(fitness_values):
+    	parent1_fitness = fitness_values[0]
+    	parent2_fitness = fitness_values[1]
+    	child1_fitness = fitness_values[2]
+    	child2_fitness = fitness_values[3]
 
-        random_mutation_boolean = \
-            random_mutation_array <= mutation_probability
+    	if(parent1_fitness > parent2_fitness):
+    		max_parent_fitness = parent1_fitness
 
-        population[random_mutation_boolean] = \
-        np.logical_not(population[random_mutation_boolean])
+    	else:
+    		max_parent_fitness = parent2_fitness
 
-        # Return mutation population
-        return population
+    	if(child1_fitness <= max_parent_fitness and child2_fitness <= max_parent_fitness):
+    		return True
 
-    def randomly_mutate_population(population, mutation_probability):
-
-        # Apply random mutation
-        random_mutation_array = np.random.random(
-            size=(population.shape))
-
-        random_mutation_boolean = \
-            random_mutation_array <= mutation_probability
-
-        population[random_mutation_boolean] = \
-        np.logical_not(population[random_mutation_boolean])
-
-        # Return mutation population
-        return population
+    	else:
+    		return False
