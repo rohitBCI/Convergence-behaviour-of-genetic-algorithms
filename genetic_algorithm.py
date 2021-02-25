@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import warnings
 
 class ga():
     def __init__(self, population, individuals, chromosome_length,scores,parent_1,parent_2, mutation_probability):
@@ -96,7 +97,7 @@ class ga():
     	else:
     		return False
 
-    def run_generation(population):
+    def run_generation(population, crossover_operator):
     	num_generation = 0
     	best_score_progress = []
     	while(True):
@@ -110,7 +111,14 @@ class ga():
 		    for i in range(0,population_size-1,2):
 		        parent_1 = population[i]
 		        parent_2 = population[i+1]
-		        child_1, child_2 = ga.uniform_crossover(parent_1, parent_2)
+		        if crossover_operator == 'UX':
+		        	child_1, child_2 = ga.uniform_crossover(parent_1, parent_2)
+		        elif crossover_operator == '2X':
+		        	child_1, child_2 = ga.two_point_crossover(parent_1, parent_2)
+		       	else:
+		       		warnings.warn(
+         "Use '2X' for two-point crossover and 'UX' for uniform crossover")
+ 
 		        family = np.array([parent_1,parent_2,child_1,child_2])
 		        family_fitness = ga.calculate_fitness(family)
 		        #print(family_fitness,flag)
