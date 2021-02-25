@@ -3,7 +3,7 @@ import random
 import warnings
 
 class ga():
-    def __init__(self, population, individuals, chromosome_length,scores,parent_1,parent_2, mutation_probability):
+    def __init__(self, population, individuals, chromosome_length,scores,parent_1,parent_2, mutation_probability, crossover_operator):
     	self.population = population
     	self.individuals= individuals
     	self.chromosome_length = chromosome_length
@@ -11,6 +11,7 @@ class ga():
     	self.parent_1 = parent_1
     	self.parent_2 = parent_2
     	self.mutation_probability = mutation_probability
+    	self.crossover_operator = crossover_operator
 
     def create_starting_population(individuals, chromosome_length):
         # Set up an initial array of all zeros
@@ -140,10 +141,5 @@ class ga():
 		        return (population[np.argmax(scores)])
 		    if(flag==1):
 		        return "Fail"
-		#     else:
-		#         print(f'Generation : {num_generation}, score : {best_score}')
-		# GA has completed required generation
-		#print ('End best score, percent target: %.1f' %best_score)
-		
 		    
 		    
