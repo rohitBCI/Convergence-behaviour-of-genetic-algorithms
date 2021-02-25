@@ -100,6 +100,7 @@ class ga():
 
     def run_generation(population, crossover_operator):
     	num_generation = 0
+    	num_fitnessfunc = 0
     	best_score_progress = []
     	while(True):
 		    num_generation += 1
@@ -122,6 +123,7 @@ class ga():
  
 		        family = np.array([parent_1,parent_2,child_1,child_2])
 		        family_fitness = ga.calculate_fitness(family)
+		        num_fitnessfunc += 1
 		        #print(family_fitness,flag)
 		        stopping_criterion  = ga.check_stopping_criterion(family_fitness)
 		        if(stopping_criterion == False):
@@ -138,7 +140,7 @@ class ga():
 		    best_score = np.max(scores)/chromosome_length * 100
 		    best_score_progress.append(best_score)
 		    if(best_score==100):
-		        return (population[np.argmax(scores)])
+		        return [num_generation, num_fitnessfunc]
 		    if(flag==1):
 		        return "Fail"
 		    
