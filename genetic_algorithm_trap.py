@@ -13,9 +13,9 @@ class ga():
         self.mutation_probability = mutation_probability
         self.crossover_operator = crossover_operator
         self.trap = trap
+        self.tightly_linked = tightly_linked
         self.k = k
         self.d = d
-        self.tightly_linked = tightly_linked
 
     def create_starting_population(individuals, chromosome_length):
         # Set up an initial array of all zeros
@@ -177,6 +177,4 @@ class ga():
             if(best_score==100):
                 return [num_generation, num_fitnessfunc]
             if(flag==1):
-                return "Fail"
-		    
-		    
+                return "Fail"	    
