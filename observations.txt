@@ -1,6 +1,90 @@
 Chromosome_length: 100
 Crossover operator used: 2X
+Fitness function: Counting Ones
 Optimal_population_size: 40
 Average number of generations for optimal_population_size: 1 (std: 0.0)
-Average number of fitness function evaluations for optimal_population_size: 20 (std: 0.0)
-Average CPU time for optimal_population_size: 0.0035157700379689536 (std: 0.002008247418062718)
+Average number of fitness function evaluations for optimal_population_size: 21 (std: 0.0)
+Average CPU time for optimal_population_size: 0.0037122865517934165 (std: 0.0022582415816878865)
+
+
+Chromosome_length: 100
+Crossover operator used: UX
+Fitness function: Counting Ones
+Optimal_population_size: 20
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 11 (std: 0.0)
+Average CPU time for optimal_population_size: 0.019978652397791546 (std: 0.0027571143350379255)
+
+
+Chromosome_length: 100
+Crossover operator used: 2X
+Deceptive (tightly-linked) (k=4,d=1)
+Optimal_population_size: 40
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 21 (std: 0.0)
+Average CPU time for optimal_population_size: 0.07964455087979634 (std: 0.021623232709686368)
+
+
+Chromosome_length: 100
+Crossover operator used: UX
+Deceptive (tightly-linked) (k=4,d=1)
+Optimal_population_size: 40
+Average number of generations for optimal_population_size: 1 (std: 1.1110243021644486)
+Average number of fitness function evaluations for optimal_population_size: 28 (std: 23.33151034545342)
+Average CPU time for optimal_population_size: 0.2782524526119232 (std: 0.17669085084778963)
+
+
+Chromosome_length: 100
+Crossover operator used: 2X
+Non-Deceptive (tightly-linked) (k=4,d=2.5)
+Optimal_population_size: 40
+Average number of generations for optimal_population_size: 1 (std: 0.19982631347136331)
+Average number of fitness function evaluations for optimal_population_size: 21 (std: 4.19635258289863)
+Average CPU time for optimal_population_size: 0.07643892367680867 (std: 0.02895917437414401)
+
+
+Chromosome_length: 100
+Crossover operator used: UX
+Non-Deceptive (tightly-linked) (k=4,d=2.5)
+Optimal_population_size: 40
+Average number of generations for optimal_population_size: 1 (std: 0.39965262694272663)
+Average number of fitness function evaluations for optimal_population_size: 22 (std: 8.39270516579726)
+Average CPU time for optimal_population_size: 0.2345993916193644 (std: 0.14864071323174174)
+
+
+Chromosome_length: 100
+Crossover operator used: 2X
+Deceptive (non-tightly-linked) (k=4,d=1)
+Optimal_population_size: 20
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 11 (std: 0.0)
+Average CPU time for optimal_population_size: 0.024543742338816326 (std: 0.0027667995419161286)
+
+
+Chromosome_length: 100
+Crossover operator used: UX
+Deceptive (non-tightly-linked) (k=4,d=1)
+Optimal_population_size: 20
+Average number of generations for optimal_population_size: 1 (std: 0.9991315673568166)
+Average number of fitness function evaluations for optimal_population_size: 13 (std: 10.990447240924983)
+Average CPU time for optimal_population_size: 0.046846876541773476 (std: 0.03813408414291999)
+
+
+Chromosome_length: 100
+Crossover operator used: 2X
+Non-Deceptive (non-tightly-linked) (k=4,d=2.5)
+Optimal_population_size: 20
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 11 (std: 0.0)
+Average CPU time for optimal_population_size: 0.027176886796951294 (std: 0.003038382430272266)
+
+
+Chromosome_length: 100
+Crossover operator used: UX
+Non-Deceptive (non-tightly-linked) (k=4,d=2.5)
+Optimal_population_size: 40
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 21 (std: 0.0)
+Average CPU time for optimal_population_size: 0.43068376183509827 (std: 0.1361004854588529)
+
+

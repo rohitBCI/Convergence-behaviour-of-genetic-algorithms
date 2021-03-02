@@ -1,0 +1,6 @@
+Chromosome_length: 100
+Crossover operator used: 2X
+Optimal_population_size: 10
+Average number of generations for optimal_population_size: 1 (std: 0.0)
+Average number of fitness function evaluations for optimal_population_size: 1 (std: 0.0)
+Average CPU time for optimal_population_size: 5.0 (std: 0.0)
