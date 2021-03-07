@@ -1,7 +1,11 @@
 # Import libraries
 import numpy as np
 import random
-import warnings
+from random import choices
+import time
+import operator
+import copy
+from collections import defaultdict
 
 class ga():
     def __init__(self, population, individuals, chromosome_length,scores,parent_1,parent_2, mutation_probability, crossover_operator,trap,k,d,tightly_linked):
@@ -19,18 +23,19 @@ class ga():
         self.d = d
 
     def create_starting_population(individuals, chromosome_length):
-        # Set up an initial array of all zeros
-        population = np.zeros((individuals, chromosome_length))
-        # Loop through each row (individual)
-        for i in range(individuals):
-            # Choose a random number of ones to create
-            ones = random.randint(0, chromosome_length)
-            # Change the required number of zeros to ones
-            population[i, 0:ones] = 1
-            # Shuffle row
-            np.random.shuffle(population[i])
-
-        return population
+    	# Set up an initial array of all zeros
+    	population = np.zeros((individuals, chromosome_length))
+    	# Loop through each row (individual)
+    	for i in range(individuals):
+    		# Choose a random number of ones to create
+    		individual = np.array([])
+    		for j in range(chromosome_length):
+    			choice = choices([0,1])[0]
+    			individual = np.hstack((individual,choice))
+    		population[i] = individual
+    		# Shuffle row
+    		np.random.shuffle(population[i])
+    	return population
 
     def calculate_fitness(population):
     	# Counting-ones fitness evaluation
@@ -42,7 +47,7 @@ class ga():
         for i in range(len(population)):
         	# Tightly-linked subfunctions
             if(tightly_linked==1):
-                sub_functions = np.array_split(population[i], chromosome_length/k)
+                sub_functions = np.array_split(population[i], 25)
             else:
             	# Not linked subfunctions
                 sub_functions = np.array([]).reshape(0,k)
@@ -51,15 +56,16 @@ class ga():
                     sub_functions = np.vstack((sub_functions,subfunction))
                     
             sub_functions_fitness = ga.calculate_fitness(sub_functions)
+            #print(sub_functions_fitness)
             # Trap function fitness evaluation
             for j in range(len(sub_functions)):
-                if(sub_functions_fitness[j]==k):
-                    continue
-                else:
-                    sub_functions_fitness[j] = (k-d) - ((k-d)/(k-1))*sub_functions_fitness[j]
+            	#print(sub_functions_fitness[j],k)
+            	if(sub_functions_fitness[j]==k):
+            		continue
+            	else:
+            		sub_functions_fitness[j] = (k-d) - ((k-d)/(k-1))*sub_functions_fitness[j]
             score = np.sum(sub_functions_fitness)
             fitness_scores = np.hstack((fitness_scores,score))
-
         return fitness_scores
 
     def two_point_crossover(parent_1, parent_2):
@@ -97,15 +103,15 @@ class ga():
 
     	for i in range(chromosome_length):
     		# Children inherit bits that parents agree on 
-    		if(parent_1[i]==parent_2[i]):
+    		choice = choices([parent_1[i],parent_2[i]])[0]
+    		compare = choice==parent_1[i]
+    		if compare==True:     
     			child_1  = np.hstack((child_1,parent_1[i]))
-    			child_2  = np.hstack((child_2,parent_1[i]))       
+    			child_2  = np.hstack((child_2,parent_2[i]))
+ 
     		else:
-    			# Otherwise, drawn at random
-    			random_sample1 = random.randint(0, 1)
-    			child_1  = np.hstack((child_1,random_sample1))
-    			random_sample2 = random.randint(0, 1)
-    			child_2  = np.hstack((child_2,random_sample2))
+    			child_1  = np.hstack((child_1,parent_2[i]))
+    			child_2  = np.hstack((child_2,parent_1[i]))
     	# Return children		
     	return child_1, child_2
 
@@ -171,9 +177,11 @@ class ga():
                 best_two = np.argsort(family_fitness)[::-1][:2]
                 best_in_family = family[best_two]
                 new_population =  np.vstack((new_population, best_in_family))
-		        
+
+            for pop in new_population :
+            	np.random.shuffle(pop)
 		    # Replace the old population with the new one
-            population = np.array(new_population)
+            population = copy.deepcopy(new_population)
 		    
 		    # Check which fitness function to use
             if(trap==0):
