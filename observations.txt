@@ -18,19 +18,19 @@ Average CPU time: 0.21140802383422852 (std: 0.2685198364127608)
 Chromosome_length: 100
 Crossover operator used: 2X
 Deceptive (tightly-linked) (k=4,d=1)
-Optimal_population_size: 45
-Average number of generations : 1.12 (std: 0.5878775382679627)
-Average number of fitness function evaluations : 29.12 (std: 37.10560065542667)
-Average CPU time: 0.07070490837097168 (std: 0.10543306283429613)
+Optimal_population_size: 59
+Average number of generations : 1.04 (std: 0.19595917942265428)
+Average number of fitness function evaluations : 31.64 (std: 26.574995766697686)
+Average CPU time: 0.13300206184387206 (std: 0.24382238915469587)
 
 
 Chromosome_length: 100
 Crossover operator used: UX
 Deceptive (tightly-linked) (k=4,d=1)
-Optimal_population_size: 48
+Optimal_population_size: 64
 Average number of generations : 1.0 (std: 0.0)
-Average number of fitness function evaluations : 25.0 (std: 15.937377450509228)
-Average CPU time: 0.25875167846679686 (std: 0.3583312394115831)
+Average number of fitness function evaluations : 33.4 (std: 23.243063481391605)
+Average CPU time: 0.5035345935821534 (std: 0.6044938123721357)
 
 
 Chromosome_length: 100

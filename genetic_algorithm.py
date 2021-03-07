@@ -32,22 +32,25 @@ class ga():
         return population
 
     def calculate_fitness(population):
+    	# Counting-ones fitness evaluation
         fitness_scores = [np.sum(p) for p in population]
-
         return fitness_scores
 
     def trap_function(population,tightly_linked,k,d,chromosome_length):
         fitness_scores = np.array([])
         for i in range(len(population)):
+        	# Tightly-linked subfunctions
             if(tightly_linked==1):
                 sub_functions = np.array_split(population[i], chromosome_length/k)
             else:
+            	# Not linked subfunctions
                 sub_functions = np.array([]).reshape(0,k)
                 for j in range(0,25):
                     subfunction = np.array([population[i][m] for m in range(j,100,25)])
                     sub_functions = np.vstack((sub_functions,subfunction))
                     
             sub_functions_fitness = ga.calculate_fitness(sub_functions)
+            # Trap function fitness evaluation
             for j in range(len(sub_functions)):
                 if(sub_functions_fitness[j]==k):
                     continue
@@ -61,7 +64,7 @@ class ga():
     def two_point_crossover(parent_1, parent_2):
 
         chromosome_length = len(parent_1)
-        # Pick crossover points, avoding ends of chromsome
+        # Pick random crossover points
         crossover_point1 = random.randint(1,chromosome_length)
         crossover_point2 = random.randint(1,chromosome_length-1)
 
@@ -71,7 +74,7 @@ class ga():
         else:
             crossover_point1, crossover_point2 = crossover_point2, crossover_point1
         
-        # Create children. np.hstack joins two arrays
+        # Create children by swapping bit string in between crossover points
 
         child_1 = np.hstack((parent_1[0:crossover_point1],
                             parent_2[crossover_point1:crossover_point2],
@@ -90,15 +93,19 @@ class ga():
     	chromosome_length = len(parent_1)
     	child_1 = np.array([])
     	child_2 = np.array([])
+
     	for i in range(chromosome_length):
+    		# Children inherit bits that parents agree on 
     		if(parent_1[i]==parent_2[i]):
     			child_1  = np.hstack((child_1,parent_1[i]))
     			child_2  = np.hstack((child_2,parent_1[i]))       
     		else:
+    			# Otherwise, drawn at random
     			random_sample1 = random.randint(0, 1)
     			child_1  = np.hstack((child_1,random_sample1))
     			random_sample2 = random.randint(0, 1)
     			child_2  = np.hstack((child_2,random_sample2))
+    	# Return children		
     	return child_1, child_2
 
 
@@ -108,13 +115,15 @@ class ga():
     	child1_fitness = fitness_values[2]
     	child2_fitness = fitness_values[3]
 
+    	# Find parent with highest fitness
     	if(parent1_fitness > parent2_fitness):
     		max_parent_fitness = parent1_fitness
-
     	else:
     		max_parent_fitness = parent2_fitness
 
+    	# Check if both children have lower fitness than the best parent
     	if(child1_fitness <= max_parent_fitness and child2_fitness <= max_parent_fitness):
+    		# stopping criterion triggered
     		return True
 
     	else:
@@ -134,13 +143,17 @@ class ga():
             for i in range(0,population_size-1,2):
                 parent_1 = population[i]
                 parent_2 = population[i+1]
+
+                # Perform unifrom crossover
                 if crossover_operator == 'UX':
                     child_1, child_2 = ga.uniform_crossover(parent_1, parent_2)
+                # Perform two-point crossover
                 elif crossover_operator == '2X':
                     child_1, child_2 = ga.two_point_crossover(parent_1, parent_2)
                 else:
                     warnings.warn("Use '2X' for two-point crossover and 'UX' for uniform crossover")
 
+               # Family of 4
                 family = np.array([parent_1,parent_2,child_1,child_2])
                 if(trap==0):
                     family_fitness = ga.calculate_fitness(family)
@@ -148,8 +161,10 @@ class ga():
                 else:
                     family_fitness = ga.trap_function(family,tightly_linked,k,d,chromosome_length)  
                     num_fitnessfunc += 1
-
+    
                 stopping_criterion  = ga.check_stopping_criterion(family_fitness)
+        
+                # Set stopping criterion
                 if(stopping_criterion == False):
                     flag=0
                 best_two = np.argsort(family_fitness)[::-1][:2]
@@ -159,14 +174,21 @@ class ga():
 		    # Replace the old population with the new one
             population = np.array(new_population)
 		    
+		    # Check which fitness function to use
             if(trap==0):
+            	# Counting-ones function
                 scores = ga.calculate_fitness(population)
                 num_fitnessfunc += 1
             else:
+            	# Trap function
                 scores = ga.trap_function(population,tightly_linked,k,d,chromosome_length)
                 num_fitnessfunc += 1
+
+            # Check if global optimum has been found    
             best_score = np.max(scores)/chromosome_length * 100
             if(best_score==100):
                 return [num_generation, num_fitnessfunc]
+
+            # Check stopping criterion    
             if(flag==1):
                 return "Fail"
