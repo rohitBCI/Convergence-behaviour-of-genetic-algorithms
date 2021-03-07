@@ -1,3 +1,4 @@
+# Import libraries
 import numpy as np
 import random
 import warnings
@@ -187,6 +188,7 @@ class ga():
             # Check if global optimum has been found    
             best_score = np.max(scores)/chromosome_length * 100
             if(best_score==100):
+            	# Return number of generations and number of fitness function evaluations
                 return [num_generation, num_fitnessfunc]
 
             # Check stopping criterion    
