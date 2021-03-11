@@ -27,7 +27,7 @@ class ga():
     	population = np.zeros((individuals, chromosome_length))
     	# Loop through each row (individual)
     	for i in range(individuals):
-    		# Choose a random number of ones to create
+    		# Choose each bit randomly
     		individual = np.array([])
     		for j in range(chromosome_length):
     			choice = choices([0,1])[0]

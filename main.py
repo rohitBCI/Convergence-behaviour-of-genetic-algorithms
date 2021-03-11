@@ -86,7 +86,7 @@ observations = np.sum(np.array(list(run_dict.values())),axis=0)
 averaged_observations = observations/len(run_dict)
 
 # Write observations to file
-f = open("observations_new.txt", "a")
+f = open("observations.txt", "a")
 
 f.write(f'Chromosome_length: {chromosome_length}\n')
 f.write(f'Crossover operator used: {crossover_operator}\n')
@@ -103,7 +103,7 @@ else:
             f.write(f'Non-Deceptive (tightly-linked) (k={k},d={d})\n') 
         else:
             f.write(f'Non-Deceptive (non-tightly-linked) (k={k},d={d})\n')
-f.write(f'Optimal_population_size: {int(averaged_observations[0])}\n')
+f.write(f'Optimal_population_size: {int(averaged_observations[0])} (std: {np.std(np.array(list(run_dict.values()))[:,0])})\n')
 f.write(f'Average number of generations : {averaged_observations[1]} (std: {np.std(np.array(list(run_dict.values()))[:,1])})\n')
 f.write(f'Average number of fitness function evaluations : {averaged_observations[2]} (std: {np.std(np.array(list(run_dict.values()))[:,2])})\n')
 f.write(f'Average CPU time: {averaged_observations[3]} (std: {np.std(np.array(list(run_dict.values()))[:,3])})\n')
